@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="max-w-md mx-auto py-8 px-4">
+      <h2 class="text-3xl font-bold mb-6 text-center">Edit Patient</h2>
+      <form
+        class="bg-white border-2  rounded-lg px-8 pt-6 pb-8 mb-4"
+        method="post"
+        action=""
+      >
+        {% csrf_token %}
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="name"
+            >Name</label
+          >
+          <input
+            class="appearance-none border rounded w-full py-2 px-3 text-gray-700"
+            id="name"
+            name="uname"
+            value="{{ data.id }}"
+            type="text"
+            placeholder="Enter your name"
+          />
+        </div>
+        <div class="mb-6">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="age"
+            >Age</label
+          >
+          <input
+            class="appearance-none border rounded w-full py-2 px-3 text-gray-700"
+            id="age"
+            name="uage"
+            type="number"
+            placeholder="Enter your age"
+            value="{{data.age}}"
+          />
+        </div>
+        <div class="flex items-center justify-center">
+          <button
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
+            type="submit"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+
+   
+  </body>
+</html>
