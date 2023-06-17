@@ -13,7 +13,7 @@ def create(request):
         n=request.POST['uname']
         a=request.POST['uage']
         m=Msg(name=n,age=a)
-        
+
         m.save()
         context = {}
         context['count']=Msg.objects.all()
@@ -38,6 +38,7 @@ def delete(request):
     
 def edit(request):
     if request.method == 'GET':
+        
         try:
             kid=request.GET.get('id')
             k=Msg.objects.get(id=kid)
@@ -50,4 +51,15 @@ def edit(request):
             # Handle the case where the string is not valid JSON
             return JsonResponse({'status': 'error', 'message': 'Invalid JSON string.'})
     else:
-        return JsonResponse({'status': 'error', 'message': 'Invalid request method.'})
+      
+        eid=request.POST['id']
+        ne=request.POST['uname']
+        ae=request.POST['uage']
+        j=Msg.objects.get(id=eid)
+        j.name = ne
+        j.age = ae
+        j.save()
+        # j=Msg.objects.filter(id=eid).update(name=ne,age=ae)
+        context={}
+        context['data']=j
+        return render(request,'edit.html',context)

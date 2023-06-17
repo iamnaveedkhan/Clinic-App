@@ -5,18 +5,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Document</title>
+    <title>Edit</title>
+    <script>
+      function getCookie(name) {
+        const cookieValue = document.cookie.match(
+          "(^|;)\\s*" + name + "\\s*=\\s*([^;]+)"
+        );
+        return cookieValue ? cookieValue.pop() : "";
+      }
+     
+    </script>
   </head>
   <body>
     <div class="max-w-md mx-auto py-8 px-4">
       <h2 class="text-3xl font-bold mb-6 text-center">Edit Patient</h2>
-      <form
+      <form id="editForm"
         class="bg-white border-2  rounded-lg px-8 pt-6 pb-8 mb-4"
         method="post"
         action=""
       >
         {% csrf_token %}
         <div class="mb-4">
+          <input type="hidden" name="id" value="{{ data.id }}"/>
+          <input type="hidden" name="kaam" value="edit"/>
           <label class="block text-gray-700 text-sm font-bold mb-2" for="name"
             >Name</label
           >
@@ -24,7 +35,7 @@
             class="appearance-none border rounded w-full py-2 px-3 text-gray-700"
             id="name"
             name="uname"
-            value="{{ data.id }}"
+            value="{{ data.name }}"
             type="text"
             placeholder="Enter your name"
           />
@@ -42,14 +53,14 @@
             value="{{data.age}}"
           />
         </div>
+        
         <div class="flex items-center justify-center">
           <button
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
-            type="submit"
+            type="submit" 
           >
             Submit
           </button>
-        </div>
       </form>
     </div>
 
