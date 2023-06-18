@@ -6,28 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Edit</title>
-    <script>
-      function getCookie(name) {
-        const cookieValue = document.cookie.match(
-          "(^|;)\\s*" + name + "\\s*=\\s*([^;]+)"
-        );
-        return cookieValue ? cookieValue.pop() : "";
-      }
-     
-    </script>
   </head>
-  <body>
-    <div class="max-w-md mx-auto py-8 px-4">
+  <body class="bg-gray-100">
+    <div class="max-w-md mx-auto py-8 px-4 ">
       <h2 class="text-3xl font-bold mb-6 text-center">Edit Patient</h2>
-      <form id="editForm"
-        class="bg-white border-2  rounded-lg px-8 pt-6 pb-8 mb-4"
+      <form
+        id="editForm"
+        class="bg-white border border-black rounded-lg px-8 pt-6 pb-8 mb-4"
         method="post"
         action=""
       >
         {% csrf_token %}
         <div class="mb-4">
-          <input type="hidden" name="id" value="{{ data.id }}"/>
-          <input type="hidden" name="kaam" value="edit"/>
+          <input type="hidden" name="id" value="{{ data.id }}" />
+          <input type="hidden" name="kaam" value="edit" />
           <label class="block text-gray-700 text-sm font-bold mb-2" for="name"
             >Name</label
           >
@@ -53,17 +45,51 @@
             value="{{data.age}}"
           />
         </div>
-        
-        <div class="flex items-center justify-center">
+        <div class="mb-6">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="symp"
+            >Symptoms</label
+          >
+          <input
+            class="appearance-none border rounded w-full py-2 px-3 text-gray-700"
+            id="symp"
+            name="symp"
+            type="text"
+            placeholder="Enter symptoms"
+            value="{{data.symptoms}}"
+          />
+        </div>
+        <div class="mb-6">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="desc"
+            >Descriptions</label
+          >
+          <input
+            class="appearance-none border rounded w-full py-2 px-3 text-gray-700"
+            id="desc"
+            name="desc"
+            type="text"
+            placeholder="Enter Descriptions"
+            value="{{data.description}}"
+          />
+        </div>
+
+        <div class="flex gap-2 items-center justify-center">
           <button
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
-            type="submit" 
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded w-full"
+            type="submit"
           >
             Submit
           </button>
+          <a href="http://127.0.0.1:8000/add" class="w-full">
+            <button
+              class="bg-green-500 hover:bg-green-700 text-white font-bold  rounded w-full"
+              type="button"
+            >
+              Home
+            </button>
+          </a>
+        </div>
+        
       </form>
     </div>
-
-   
   </body>
 </html>

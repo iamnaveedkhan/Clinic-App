@@ -3,61 +3,56 @@ from django.shortcuts import render,HttpResponse
 from clinicapp.models import Msg
 import json
 # Create <divyour views here.
-def create(request):
+def add(request):
     if request.method=='GET':
 
         context = {}
         context['count']=Msg.objects.all()
-        return render(request,'create.html',context)
+        return render(request,'add.html',context)
     else:
         n=request.POST['uname']
         a=request.POST['uage']
-        m=Msg(name=n,age=a)
+        s=request.POST['symp']
+        d=request.POST['desc']
+        m=Msg(name=n,age=a,symptoms=s,description=d)
 
         m.save()
         context = {}
         context['count']=Msg.objects.all()
-        return render(request,'create.html',context)
+        return render(request,'add.html',context)
+    
+
 def delete(request):
     if request.method == 'POST':
         string_data =request.body.decode("utf-8")
-        if string_data is None:
-            return JsonResponse({'status': 'error', 'message': 'Missing or invalid "id" parameter.'})
-        try:
-            json_data = json.loads(string_data)
-            k=Msg.objects.get(id=json_data.get('id'))
-           
-            k.delete()
-            # Process the JSON data as needed
-            return JsonResponse({'status': 'success', 'data': json_data})
-        except json.JSONDecodeError:
-            # Handle the case where the string is not valid JSON
-            return JsonResponse({'status': 'error', 'message': 'Invalid JSON string.'})
-    else:
-        return JsonResponse({'status': 'error', 'message': 'Invalid request method.'})
+        json_data = json.loads(string_data)
+        k=Msg.objects.get(id=json_data.get('id'))
+        
+        k.delete()
+        return render({json_data})
     
 def edit(request):
     if request.method == 'GET':
+        kid=request.GET.get('id')
+        k=Msg.objects.get(id=kid)
         
-        try:
-            kid=request.GET.get('id')
-            k=Msg.objects.get(id=kid)
-           
-            context= {}
-            context['data']= k
-            # Process the JSON data as needed
-            return render(request, 'edit.html', context)
-        except json.JSONDecodeError:
-            # Handle the case where the string is not valid JSON
-            return JsonResponse({'status': 'error', 'message': 'Invalid JSON string.'})
+        context= {}
+        context['data']= k
+        
+        return render(request, 'edit.html', context)
+        
     else:
       
         eid=request.POST['id']
         ne=request.POST['uname']
         ae=request.POST['uage']
+        se=request.POST['symp']
+        de=request.POST['desc']
         j=Msg.objects.get(id=eid)
         j.name = ne
         j.age = ae
+        j.symptoms = se
+        j.description = de
         j.save()
         # j=Msg.objects.filter(id=eid).update(name=ne,age=ae)
         context={}

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Document</title>
+    <script>
+      if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+      }
+      
+
+      function getCookie(name) {
+        const cookieValue = document.cookie.match(
+          "(^|;)\\s*" + name + "\\s*=\\s*([^;]+)"
+        );
+        return cookieValue ? cookieValue.pop() : "";
+      }
+      async function handleClick(id) {
+        
+        await fetch("http://127.0.0.1:8000/delete", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie("csrftoken"),
+          },
+          body: JSON.stringify({ id }),
+        }).then((res) => location.reload());
+      }
+
+    </script>
+  </head>
+  <body class="flex bg-gray-100">
+    <div class="w-1/3  py-8 px-4">
+      <h2 class="text-3xl font-bold mb-6 text-center">Add Patient</h2>
+      <form
+        class="bg-white border border-black rounded-lg px-8 pt-6 pb-8 mb-4"
+        method="post"
+        action=""
+      >
+        {% csrf_token %}
+        <div class="mb-4">
+         
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="name"
+            >Name</label
+          >
+          <input
+            class="appearance-none border rounded w-full py-2 px-3 text-gray-700"
+            id="name"
+            name="uname"
+            type="text"
+            placeholder="Enter your name"
+          />
+        </div>
+        <div class="mb-6">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="age"
+            >Age</label
+          >
+          <input
+            class="appearance-none border rounded w-full py-2 px-3 text-gray-700"
+            id="age"
+            name="uage"
+            type="float"
+            placeholder="Enter your age"
+          />
+        </div>
+        
+        <div class="mb-4">
+         
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="symp"
+            >Symptoms</label
+          >
+          <input
+            class="appearance-none border rounded w-full py-2 px-3 text-gray-700"
+            id="symp"
+            name="symp"
+            type="text"
+            placeholder="Enter symp"
+          />
+        </div>
+        <div class="mb-4">
+         
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="desc"
+            >Descriptions</label
+          >
+          <input
+            class="appearance-none border rounded w-full py-2 px-3 text-gray-700"
+            id="desc"
+            name="desc"
+            type="text"
+            placeholder="Enter descriptions"
+          />
+        </div>
+        <div class="flex items-center justify-center">
+          <button
+            class="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold p-2 rounded"
+            type="submit"
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="w-2/3  py-8 px-4">
+      <h2 class="text-3xl font-bold mb-6 text-center">All Patients</h2>
+      <div  class="bg-white rounded-lg border border-black">
+        <table class="w-full">
+          <thead>
+            <tr>
+              <th class="p-2 px-4 border-b text-center">ID</th>
+              <th class="p-2 px-4 border-b text-center">Name</th>
+              <th class="p-2 px-4 border-b text-center">Age</th>
+              <th class="p-2 px-4 border-b text-center">Symptoms</th>
+              <th class="p-2 px-4 border-b text-center">Descriptons</th>
+              <th class="p-2 px-4 border-b text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in count %}
+            <tr>
+              <td class="p-2 px-4 border-b text-center">{{ p.id }}</td>
+              <td class="p-2 px-4 border-b text-center">{{ p.name }}</td>
+              <td class="p-2 px-4 border-b text-center">{{ p.age }}</td>
+              <td class="p-2 px-4 border-b text-center">{{ p.symptoms }}</td>
+              <td class="p-2 px-4 border-b text-center">{{ p.description }}</td>
+              <td class="p-2 px-4 border-b text-center">
+                <button
+                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline mr-2"
+                  type="button"
+                  >
+                  
+                  <a href="http://127.0.0.1:8000/edit?id={{ p.id }}">Edit</a>
+                </button>
+                <button
+                  class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
+                  onclick="handleClick('{{ p.id }}')"
+                  type="button"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+            {% endfor %}
+            
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
