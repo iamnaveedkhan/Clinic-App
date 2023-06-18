@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.shortcuts import render,HttpResponse
 from clinicapp.models import Msg
 import json
-# Create <divyour views here.
+
 def add(request):
     if request.method=='GET':
 
