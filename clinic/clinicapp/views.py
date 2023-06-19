@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render,HttpResponse,redirect
 from clinicapp.models import Msg
 import json
 
@@ -27,9 +27,13 @@ def delete(request):
         string_data =request.body.decode("utf-8")
         json_data = json.loads(string_data)
         k=Msg.objects.get(id=json_data.get('id'))
-        
+
         k.delete()
-        return render({json_data})
+        # return render({json_data})
+        # return render(request,'add.html')
+        return redirect('add')
+    
+    
     
 def edit(request):
     if request.method == 'GET':
@@ -57,4 +61,5 @@ def edit(request):
         # j=Msg.objects.filter(id=eid).update(name=ne,age=ae)
         context={}
         context['data']=j
-        return render(request,'edit.html',context)
+        return redirect('add')
+        # return render(request,'add.html')

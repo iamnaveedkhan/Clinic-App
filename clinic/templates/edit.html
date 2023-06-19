@@ -19,7 +19,6 @@
         {% csrf_token %}
         <div class="mb-4">
           <input type="hidden" name="id" value="{{ data.id }}" />
-          <input type="hidden" name="kaam" value="edit" />
           <label class="block text-gray-700 text-sm font-bold mb-2" for="name"
             >Name</label
           >
@@ -81,10 +80,11 @@
           </button>
           <a href="http://127.0.0.1:8000/add" class="w-full">
             <button
-              class="bg-green-500 hover:bg-green-700 text-white font-bold  rounded w-full"
+              class="bg-red-500 hover:bg-red-700 text-white font-bold  rounded w-full"
               type="button"
+              onclick="handleClick('{{ data.id }}')"
             >
-              Home
+              Delete
             </button>
           </a>
         </div>
@@ -92,4 +92,29 @@
       </form>
     </div>
   </body>
+  <script>
+    if (window.history.replaceState) {
+      window.history.replaceState(null, null, window.location.href);
+    }
+    
+    
+    function getCookie(name) {
+      const cookieValue = document.cookie.match(
+        "(^|;)\\s*" + name + "\\s*=\\s*([^;]+)"
+      );
+      return cookieValue ? cookieValue.pop() : "";
+    }
+    async function handleClick(id) {
+      
+      await fetch("http://127.0.0.1:8000/delete", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": getCookie("csrftoken"),
+        },
+        body: JSON.stringify({ id }),
+      })
+    }
+    // .then((res) => location.reload());
+  </script>
 </html>
