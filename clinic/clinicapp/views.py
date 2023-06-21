@@ -22,44 +22,35 @@ def add(request):
         return render(request,'add.html',context)
     
 
-def delete(request):
-    if request.method == 'POST':
-        string_data =request.body.decode("utf-8")
-        json_data = json.loads(string_data)
-        k=Msg.objects.get(id=json_data.get('id'))
+def delete(request,rid):
+    k=Msg.objects.get(id=rid)
 
-        k.delete()
-        # return render({json_data})
-        # return render(request,'add.html')
-        return redirect('add')
+    k.delete()
+    # return render({json_data})
+    # return render(request,'add.html')
+    return redirect('/add')
     
     
     
-def edit(request):
+def edit(request,rid):
     if request.method == 'GET':
-        kid=request.GET.get('id')
-        k=Msg.objects.get(id=kid)
-        
+        k=Msg.objects.get(id=rid)
         context= {}
         context['data']= k
-        
-        return render(request, 'edit.html', context)
+        return render(request,'edit.html', context)
         
     else:
-      
         eid=request.POST['id']
         ne=request.POST['uname']
         ae=request.POST['uage']
         se=request.POST['symp']
         de=request.POST['desc']
-        j=Msg.objects.get(id=eid)
+        j=Msg.objects.get(id=rid)
         j.name = ne
         j.age = ae
         j.symptoms = se
         j.description = de
         j.save()
         # j=Msg.objects.filter(id=eid).update(name=ne,age=ae)
-        context={}
-        context['data']=j
-        return redirect('add')
+        return redirect('/add')
         # return render(request,'add.html')
