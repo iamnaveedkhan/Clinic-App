@@ -40,7 +40,6 @@ def edit(request,rid):
         return render(request,'edit.html', context)
         
     else:
-        eid=request.POST['id']
         ne=request.POST['uname']
         ae=request.POST['uage']
         se=request.POST['symp']
@@ -53,4 +52,4 @@ def edit(request,rid):
         j.save()
         # j=Msg.objects.filter(id=eid).update(name=ne,age=ae)
         return redirect('/add')
-        # return render(request,'add.html')
+        
