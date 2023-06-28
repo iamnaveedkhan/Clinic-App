@@ -1,7 +1,5 @@
-from django.http import JsonResponse
 from django.shortcuts import render,HttpResponse,redirect
 from clinicapp.models import Msg
-import json
 
 def add(request):
     if request.method=='GET':
@@ -50,6 +48,5 @@ def edit(request,rid):
         j.symptoms = se
         j.description = de
         j.save()
-        # j=Msg.objects.filter(id=eid).update(name=ne,age=ae)
         return redirect('/add')
         
