@@ -3,3 +3,5 @@ Clinic application This application is developed by using HTML,CSS,tailwind and 
 This application contains following functionalities
 
 User can Add,update,delete and View patient details.
+
+have to install virtual env first
